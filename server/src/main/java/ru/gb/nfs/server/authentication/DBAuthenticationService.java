@@ -1,7 +1,10 @@
 package ru.gb.nfs.server.authentication;
 
+import org.springframework.stereotype.Service;
+
 import java.sql.*;
 
+@Service
 public class DBAuthenticationService implements AuthenticationService {
 
     private static Connection connection;

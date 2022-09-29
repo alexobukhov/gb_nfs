@@ -1,6 +1,7 @@
 package ru.gb.nfs.server.common.handler;
 
 import io.netty.channel.ChannelHandlerContext;
+import org.springframework.beans.factory.annotation.Value;
 import ru.gb.nfs.server.common.dto.UploadFileRequest;
 import ru.gb.nfs.server.common.dto.UploadFileResponse;
 
@@ -12,14 +13,15 @@ import java.nio.file.StandardOpenOption;
 
 public class UploadFileHandler implements RequestHandler<UploadFileRequest, UploadFileResponse> {
 
-    private static final String SERVER_PATH = "/Users/bchervoniy/IdeaProjects/file-warehouse/server-dir/";
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Override
     public UploadFileResponse handle(UploadFileRequest request, ChannelHandlerContext context) {
         String fileName = request.getFileName();
         byte[] filePartData = request.getFilePartData();
 
-        Path newFilePath = Paths.get(SERVER_PATH + fileName);
+        Path newFilePath = Paths.get(uploadPath + fileName);
         try {
             Files.write(newFilePath, filePartData, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
