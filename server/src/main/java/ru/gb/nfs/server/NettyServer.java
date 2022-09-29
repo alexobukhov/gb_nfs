@@ -11,12 +11,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import org.apache.log4j.Logger;
 import ru.gb.nfs.server.handler.ServerHandler;
 
 public class NettyServer {
-
-    private Logger logger;
 
     public static final int MAX_OBJECT_SIZE = 20 * 1_000_000;
 
@@ -41,7 +38,8 @@ public class NettyServer {
             ChannelFuture channelFuture = serverBootstrap.bind().sync();
             channelFuture.channel().closeFuture().sync();
         } finally {
-
+            worker.shutdownGracefully();
+            boss.shutdownGracefully();
         }
     }
 }

@@ -15,10 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.gb.nfs.server.common.handler.GetFilesListHandler;
+import ru.gb.nfs.server.common.handler.UploadFileHandler;
 import ru.gb.nfs.server.config.NettyConfig;
 import ru.gb.nfs.server.handler.ServerHandler;
-
-import javax.annotation.Resource;
 
 @Component
 public class NettyServerListener {
@@ -34,9 +34,15 @@ public class NettyServerListener {
     EventLoopGroup work = new NioEventLoopGroup();
 
     @Autowired
-    private ServerHandler serverHandler;
+    ServerHandler serverHandler;
 
-    @Resource
+    @Autowired
+    GetFilesListHandler getFilesListHandler;
+
+    @Autowired
+    UploadFileHandler uploadFileHandler;
+
+    @Autowired
     private NettyConfig nettyConfig;
 
     public void start() throws InterruptedException {
