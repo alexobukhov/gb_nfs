@@ -49,9 +49,9 @@ public class DBAuthenticationService implements AuthenticationService {
         return ((passwordDB != null) && (passwordDB.equals(password))) ? username : null;
     }
 
-    private static void updateUsername(User user) throws SQLException {
+    private static void updateUsername(String username, String login) throws SQLException {
         statement.executeUpdate(String.format("UPDATE auth SET username = '%s' WHERE login = '%s'",
-                user.getUsername(), user.getLogin()));
+                username, login));
     }
 
     @Override
