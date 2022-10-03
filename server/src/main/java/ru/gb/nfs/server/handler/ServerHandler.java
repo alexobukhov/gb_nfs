@@ -25,10 +25,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) {
         BasicRequest request = (BasicRequest) msg;
-        if (msg instanceof BasicRequest) {
+        if (msg instanceof AuthRequest) {
             AuthRequest authRequest = (AuthRequest) msg;
-            String username = dbAuthenticationService.getUsernameByLoginAndPassword(authRequest.getLogin(),
-                    authRequest.getPassword());
+            String username = dbAuthenticationService.getUsernameByLoginAndPassword(
+                    authRequest.getLogin(), authRequest.getPassword()
+            );
             if (username == null) {
                 BasicResponse authErrorResponse = new BasicResponse("Not authenticated!");
                 channelHandlerContext.writeAndFlush(authErrorResponse);

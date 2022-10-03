@@ -15,15 +15,17 @@ import java.nio.file.StandardOpenOption;
 @Service
 public class UploadFileHandler implements RequestHandler<UploadFileRequest, UploadFileResponse> {
 
-    @Value("${upload.directory}")
-    private String uploadDirectory;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Override
     public UploadFileResponse handle(UploadFileRequest request, ChannelHandlerContext context) {
         String fileName = request.getFileName();
         byte[] filePartData = request.getFilePartData();
 
-        Path newFilePath = Paths.get("/"+ uploadDirectory + "/" + fileName);
+        Path newFilePath = Paths.get(uploadPath + fileName);
+        
         try {
             Files.write(newFilePath, filePartData, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {

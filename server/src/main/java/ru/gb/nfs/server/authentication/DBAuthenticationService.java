@@ -1,7 +1,6 @@
 package ru.gb.nfs.server.authentication;
 
 import org.springframework.stereotype.Service;
-import ru.gb.nfs.server.models.User;
 
 import java.sql.*;
 
