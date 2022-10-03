@@ -2,6 +2,7 @@ package ru.gb.nfs.server.common.handler;
 
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import ru.gb.nfs.server.common.dto.UploadFileRequest;
 import ru.gb.nfs.server.common.dto.UploadFileResponse;
 
@@ -11,7 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+@Service
 public class UploadFileHandler implements RequestHandler<UploadFileRequest, UploadFileResponse> {
+
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -22,6 +25,7 @@ public class UploadFileHandler implements RequestHandler<UploadFileRequest, Uplo
         byte[] filePartData = request.getFilePartData();
 
         Path newFilePath = Paths.get(uploadPath + fileName);
+        
         try {
             Files.write(newFilePath, filePartData, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
